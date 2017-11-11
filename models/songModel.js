@@ -9,6 +9,10 @@ var Schema = mongoose.Schema;
 
 // Instantiate a userSchema object with the Schema class we just made
 var SongSchema = new Schema({
+  userName: {
+    type: String,
+    required: true
+  },
   // songName is a string. We will trim any trailing whitespace. It's also required
   songName: {
     type: String,
