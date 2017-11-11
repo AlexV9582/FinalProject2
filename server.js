@@ -15,6 +15,7 @@ var app = express();
 app.use(bodyParser.urlencoded({
   extended: false
 }));
+app.use(bodyParser.json())
 
 // Set up a static folder (public) for our web app
 app.use(express.static("public"));
@@ -43,9 +44,8 @@ db.once("open", function() {
 
 var userName;
 // Routes
-// 1. At the root path, send a simple hello world message to the browser
-app.get("/addSongs/" + userName, function(req, res) {
-    Song.find({username: userName}, function(error, songs) {
+app.get("/api/addSongs/:username", function(req, res) {
+    Song.find({username: req.params.userName}, function(error, songs) {
       if (error) {
         res.send(error);
       } else {
@@ -55,7 +55,7 @@ app.get("/addSongs/" + userName, function(req, res) {
   });
 
 // This will get the users from the mongoDB
-app.post("/users", function(req, res) {
+app.post("/api/users", function(req, res) {
    // FInd user info in collection
    console.log(req.body)
    User.find({ username: req.body.username, password: req.body.password }, function(error, user) {
@@ -71,7 +71,7 @@ app.post("/users", function(req, res) {
 }); 
 
 //Add new user to db
-app.post("/newUser", function(req, res) {
+app.post("/api/newUser", function(req, res) {
   var info = new User(req.body);
   // Now, save that entry to the db
   info.save(function(err, doc) {
@@ -87,7 +87,7 @@ app.post("/newUser", function(req, res) {
 });
 
 //Add new song to db
-app.post("/newSong", function(req, res) {
+app.post("/api/newSong", function(req, res) {
   var info = new Song(req.body);
   // Now, save that entry to the db
   info.save(function(err, doc) {

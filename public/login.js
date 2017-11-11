@@ -4,7 +4,7 @@ $("#login").on("click", function(){
         username: $("#userName").val(),
         password: $("#password").val()
     }
-    $.post("/users", userInfo, function(data) {
+    $.post("/api/users", userInfo, function(data) {
         if (data != "User not found") {
             window.location = "./addSongs/" + data;
         } else {
@@ -21,8 +21,8 @@ $("#newUser").on("click", function() {
         username: $("#newUserName").val(),
         password: $("#newPassword").val()
     }
-    $.post("/newUser", userInfo, function(data) {
-        console.log(data);
+    $.post("/api/newUser", userInfo, function(data) {
+       //console.log(data);
     })
     $("#newUserName").val("");
     $("#newPassword").val("");

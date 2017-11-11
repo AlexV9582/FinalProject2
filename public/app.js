@@ -3,7 +3,7 @@ function displaySet(songs) {
     $("tbody").empty();
 
     for (i=0; i < songs.length; i++) {
-      $("tbody").append(`<tr><td>${songs[i].title}</td><td>${songs[i].key}</td></tr>`);
+      $("tbody").append(`<tr><td>${songs[i].songName}</td><td>${songs[i].Key}</td></tr>`);
     }
   }
 
@@ -20,7 +20,7 @@ var url = window.location.href;
 var splitUrl = url.split("/");
 
 // First thing: ask the back end for json with all songs
-$.getJSON("/addSongs/" + splitUrl[4]).done(function(data) {
+$.getJSON("/api/addSongs/" + splitUrl[splitUrl.length-1]).done(function(data) {
   // Call our function to generate a table body
   displaySet(data);
   console.log(data)
@@ -35,7 +35,7 @@ $("#newSong").on("click", function() {
       Set: $("#set").val()
   }
   console.log(songInfo)
-  $.post("/newSong", songInfo, function(songdata) {
+  $.post("/api/newSong", songInfo, function(songdata) {
       console.log(songdata);
   })
   $("#songName").val("");
